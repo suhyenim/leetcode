@@ -1,10 +1,9 @@
 class Solution:
     def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
-        dic1 = Counter(students)
-        dic2 = Counter(sandwiches)
-        for c in sandwiches:
-            if dic1[c] != 0:
-                dic1[c] -= 1
+        while len(sandwiches) != 0 and sandwiches[0] in students:
+            if students[0] == sandwiches[0]:
+                students.pop(0)
+                sandwiches.pop(0)
             else:
-                break
-        return sum(dic1.values())
+                students.append(students.pop(0))
+        return len(students)
