@@ -1,16 +1,25 @@
-class Solution:
-    def decodeMessage(self, key: str, message: str) -> str:
-        alphabet = 'abcdefghijklmnopqrstuvwxyz'
-        sub_table = {}
-        i = 0
-        for char in key:
-            if char != ' ' and char not in sub_table.keys():
-                sub_table[char] = alphabet[i] 
-                i += 1     
-        ans = []
-        for char in message:
-            if char == ' ':
-                ans.append(' ')
-            else:
-                ans.append(sub_table[char])
-        return ''.join(ans);
+func decodeMessage(key string, message string) string {
+	var sb strings.Builder
+	hash, j := make(map[byte]byte), 0
+
+	for i := range key {
+		if key[i] == ' ' {
+			continue
+		}
+		if _, ok := hash[key[i]]; !ok {
+			hash[key[i]] = byte('a' + j)
+			j++
+		}
+	}
+
+	for i := range message {
+		if message[i] == ' ' {
+			sb.WriteByte(' ')
+			continue
+		}
+		by := hash[message[i]]
+		sb.WriteByte(by)
+	}
+
+	return sb.String()
+}
